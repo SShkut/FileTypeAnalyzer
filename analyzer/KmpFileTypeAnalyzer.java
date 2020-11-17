@@ -1,24 +1,26 @@
 package analyzer;
 
-import model.FileTypePattern;
+import java.util.List;
 
 public class KmpFileTypeAnalyzer implements FileTypeAnalyzer {
 
     @Override
-    public String getFileType(byte[] data, FileTypePattern fileTypePattern) {
-        char pattern[] = fileTypePattern.getSignature().toCharArray();
-        int[] prefixFunction = getPrefixFunction(fileTypePattern.getSignature());
-        //current symbol of the pattern
-        int j = 0;
-        for (int i = 0; i < data.length; ++i) {
-            while (j > 0 && data[i] != pattern[j]) {
-                j = prefixFunction[j - 1];
-            }
-            if (data[i] == pattern[j]) {
-                j++;
-            }
-            if (j == pattern.length) {
-                return fileTypePattern.getFileTypeDescription();
+    public String getFileType(byte[] data, List<FileTypePattern> patterns) {
+        for (FileTypePattern fileTypePattern : patterns) {
+            char[] pattern = fileTypePattern.getSignature().toCharArray();
+            int[] prefixFunction = getPrefixFunction(fileTypePattern.getSignature());
+            //current symbol of the pattern
+            int j = 0;
+            for (int i = 0; i < data.length; ++i) {
+                while (j > 0 && data[i] != pattern[j]) {
+                    j = prefixFunction[j - 1];
+                }
+                if (data[i] == pattern[j]) {
+                    j++;
+                }
+                if (j == pattern.length) {
+                    return fileTypePattern.getFileTypeDescription();
+                }
             }
         }
 

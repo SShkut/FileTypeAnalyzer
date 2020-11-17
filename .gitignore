@@ -46,8 +46,6 @@ speed-measure-plugin*.json
 
 # IDEs and editors
 /.idea
-.project
-.classpath
 .c9/
 *.launch
 .settings/
@@ -92,8 +90,6 @@ bower_components/
 connect.lock/
 coverage/
 libpeerconnection.log/
-npm-debug.log
-testem.log
 typings/
 
 # e2e
